@@ -1,38 +1,25 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import MovieList from './MovieList';
-
-
+import axios from 'axios';
+require('dotenv').config()
 
 
 class App extends React.Component {
     
     state = {
-        movies: [
-            {
-                "id": 1,
-                "name": "Joker",
-                "raiting": 5,
-                "overwiev": "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı",
-                "imageURL": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/3DeEAwO42j4VmRdI4KSSN1VloM.jpg"
-            },
-            {
-                "id": 2,
-                "name": "Testere",
-                "raiting": 8,
-                "overwiev": "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı",
-                "imageURL": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/oa3vFRANEmx2RtAp0Q3mKxqhTVV.jpg"
-            },
-            {
-                "id": 3,
-                "name": "Breach",
-                "raiting": 8.3,
-                "overwiev": "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı",
-                "imageURL": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/13B6onhL6FzSN2KaNeQeMML05pS.jpg"
-            }
-        ],
+        movies: [],
         SearchF: ""
     }
+
+
+    async componentDidMount(){
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`) 
+        this.setState({movies: response.data.results})
+    }
+    // en-Us tr-TR
+
+
     // FİLM SİLME FONKSİYONU
     deleteMovie = (movie) => {
         const newMovieList = this.state.movies.filter(
@@ -53,7 +40,7 @@ class App extends React.Component {
 // Film filtereyerek değişikliği searchf e yazarak movie ismi ile karşılaştırarak uyuşmayanları göster.
         let filteredMovies = this.state.movies.filter(
             (movie) => {
-                return movie.name.toLocaleLowerCase().indexOf(this.state.SearchF.toLocaleLowerCase()) !== -1
+                return movie.title.toLocaleLowerCase().indexOf(this.state.SearchF.toLocaleLowerCase()) !== -1
             }
         )
 

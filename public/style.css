@@ -1,0 +1,16 @@
+/* .card-text {
+  background-color: #fff;
+  padding: 1rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-height: 100%;
+  transform: translateY(103%);
+  transition: transform 0.5s ease-in;
+  border:solid 1px black;
+}
+
+.card-text:hover {
+  transform: translateY(0);
+} */
